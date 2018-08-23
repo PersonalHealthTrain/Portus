@@ -24,6 +24,11 @@
 
     <td>{{ pushedAt }}</td>
 
+
+    <td>
+      <button>Click me</button>
+    </td>
+
     <td class="vulns" v-if="securityEnabled">
       <span v-if="scanPending">Pending</span>
       <span v-if="scanInProgress">In progress</span>

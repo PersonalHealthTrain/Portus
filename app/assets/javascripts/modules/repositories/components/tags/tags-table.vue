@@ -16,6 +16,7 @@
           <th>Author</th>
           <th>Image</th>
           <th>Pushed at</th>
+          <th>Train Controls</th>
           <th v-if="securityEnabled">Security</th>
         </tr>
       </thead>
