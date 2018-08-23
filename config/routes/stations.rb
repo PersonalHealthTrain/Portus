@@ -3,6 +3,9 @@
 
 resources :stations, only: %i[index]
 
+post "stations/ping", to: "stations/stations#ping"
+
+
 # Used as a reference for writing this f
 
 # resources :repositories, only: %i[index show destroy] do

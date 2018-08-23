@@ -23,4 +23,10 @@ class StationsController < ApplicationController
       type:         :internal
     ).to_json
   end
+
+
+  def ping
+
+  end
+
 end
