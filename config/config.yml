@@ -382,3 +382,6 @@ pagination:
   # Number of pages to be showed before and after the current one
   # e,g.: Prev 1 2 [3] 4 5 Next
   before_after: 2
+
+# Whether this Portus instance points to a train registry
+trainregisty: true

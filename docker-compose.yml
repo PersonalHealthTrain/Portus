@@ -1,6 +1,13 @@
 version: '2'
 
 services:
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+    - 7070:8080
+
   portus:
     build: .
     image: opensuse/portus:development

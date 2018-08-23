@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: repositories
@@ -10,6 +9,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  marked       :boolean          default(FALSE)
+#  istrain      :boolean          default(FALSE)
 #
 # Indexes
 #
