@@ -3,6 +3,7 @@
 class StationsController < ApplicationController
   #before_action :set_repository, only: %i[show toggle_star]
 
+
   # GET /stations
   # GET /stations.json
 
@@ -23,10 +24,4 @@ class StationsController < ApplicationController
       type:         :internal
     ).to_json
   end
-
-
-  def ping
-
-  end
-
 end
