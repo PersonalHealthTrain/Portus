@@ -1,16 +1,12 @@
 <template>
   <div class="table-responsive">
-    <table class="table table-striped table-hover" :class="{'table-sortable': sortable}">
+    <table class="table table-striped table-hover">
       <colgroup>
         <col class="col-60">
       </colgroup>
       <thead>
         <tr>
-          <th @click="sort('name')">
-            <i class="fa fa-fw fa-sort" :class="{
-              'fa-sort-amount-asc': sorting.by === 'name' && sorting.asc,
-              'fa-sort-amount-desc': sorting.by === 'name' && !sorting.asc,
-            }"></i>
+          <th>
             Station ID
           </th>
         </tr>
@@ -29,8 +25,6 @@
 </template>
 
 <script>
-  import TableSortableMixin from '~/shared/mixins/table-sortable';
-  import TablePaginatedMixin from '~/shared/mixins/table-paginated';
 
   import StationTableRow from './table-row';
 
@@ -40,9 +34,10 @@
         type: String,
         default: '',
       },
+      stations: {
+        type: Array,
+      },
     },
-
-    mixins: [TableSortableMixin, TablePaginatedMixin],
 
     components: {
       StationTableRow,

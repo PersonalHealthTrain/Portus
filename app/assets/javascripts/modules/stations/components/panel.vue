@@ -9,7 +9,7 @@
     </div>
 
     <div slot="body">
-      <stations-table :stations="stations" :sortable="true" sort-by="name"></stations-table>
+      <stations-table :stations="stations"></stations-table>
     </div>
   </panel>
 </template>
@@ -23,8 +23,10 @@
         type: String,
         default: 'Stations',
       },
+      stations: {
+        type: Array,
+      },
     },
-
     components: {
       StationsTable,
     },
