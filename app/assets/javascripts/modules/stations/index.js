@@ -1,7 +1,6 @@
 import Vue from 'vue';
-//
-// import RepositoriesIndexPage from './pages/index';
-// import RepositoriesShowPage from './pages/show';
+
+import StationsIndexPage from './pages/index';
 
 $(() => {
   if (!$('body[data-controller="stations"]').length) {
@@ -13,6 +12,7 @@ $(() => {
     el: '.vue-root',
 
     components: {
+      StationsIndexPage,
     },
   });
 });

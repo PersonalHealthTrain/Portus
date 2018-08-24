@@ -11,9 +11,8 @@
 #
 
 class Station < ActiveRecord::Base
-
-
-
-
+  include PublicActivity::Common
+  include SearchCop
+  include ::Activity::Fallback
 
 end
