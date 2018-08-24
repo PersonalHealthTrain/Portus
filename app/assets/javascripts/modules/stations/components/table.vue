@@ -9,6 +9,9 @@
           <th>
             Station ID
           </th>
+          <th>
+            Station Name
+          </th>
         </tr>
       </thead>
       <tbody>

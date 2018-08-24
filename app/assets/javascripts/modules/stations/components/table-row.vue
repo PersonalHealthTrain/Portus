@@ -3,6 +3,9 @@
     <td>
       {{ station.station_id}}
     </td>
+    <td>
+      {{ station.display_name }}
+    </td>
   </tr>
 </template>
 

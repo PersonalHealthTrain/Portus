@@ -134,6 +134,7 @@ module API
       include ::API::Helpers
 
       expose :station_id, documentation: { type: Integer, desc: "Station ID"}
+      expose :display_name, documentation: {type: String, desc: "Station Name"}
     end
 
 

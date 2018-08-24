@@ -1,6 +1,6 @@
 <template>
   <div class="stations-index-page">
-    <stations-panel title="Registered Stations"></stations-panel>
+    <stations-panel title="Registered Stations" :stations="stations"></stations-panel>
   </div>
 </template>
 
