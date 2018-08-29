@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180823122930) do
+ActiveRecord::Schema.define(version: 201808291092830) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id",   limit: 4
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 20180823122930) do
 
   add_index "comments", ["repository_id"], name: "index_comments_on_repository_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "jobs", force: :cascade do |t|
+    t.integer  "job_id",     limit: 4,     null: false
+    t.text     "type",       limit: 65535, null: false
+    t.text     "state",      limit: 65535, null: false
+    t.text     "parameters", limit: 65535, null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
 
   create_table "namespaces", force: :cascade do |t|
     t.string   "name",        limit: 255

@@ -26,7 +26,7 @@
 
 
     <td>
-      <button>Click me</button>
+      <create-tag-action></create-tag-action>
     </td>
 
     <td class="vulns" v-if="securityEnabled">
@@ -45,6 +45,7 @@
   import Tag from './tag';
 
   import VulnerabilitiesParser from '../../services/vulnerabilities-parser';
+  import CreateTagAction from './create/create-tag-action';
 
   const NOT_SCANNED = 0;
   const SCAN_DONE = 2;
@@ -61,6 +62,7 @@
     },
 
     components: {
+      CreateTagAction,
       Tag,
     },
 

@@ -16,15 +16,23 @@
           <th>Author</th>
           <th>Image</th>
           <th>Pushed at</th>
-          <th>Train Controls</th>
+          <th>Action</th>
           <th v-if="securityEnabled">Security</th>
         </tr>
       </thead>
       <tbody>
-        <tag-row v-for="tag in filteredTags" :key="tag[0].digest" :tag="tag" :can-destroy="canDestroy" :security-enabled="securityEnabled" :state="state" :tags-path="tagsPath" :repository="repository"></tag-row>
+        <tag-row
+          v-for="tag in filteredTags"
+          :key="tag[0].digest"
+          :tag="tag"
+          :can-destroy="canDestroy"
+          :security-enabled="securityEnabled"
+          :state="state"
+          :tags-path="tagsPath"
+          :repository="repository">
+        </tag-row>
       </tbody>
     </table>
-
     <table-pagination :total.sync="tags.length" :current-page="currentPage" :itens-per-page.sync="limit" @update="updateCurrentPage"></table-pagination>
   </div>
 </template>
@@ -33,6 +41,7 @@
   import TablePaginatedMixin from '~/shared/mixins/table-paginated';
 
   import TagRow from './tags-table-row';
+
 
   export default {
     props: {
@@ -43,7 +52,6 @@
       tagsPath: String,
       repository: Object,
     },
-
     mixins: [TablePaginatedMixin],
 
     components: {
