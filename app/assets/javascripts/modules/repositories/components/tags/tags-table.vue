@@ -23,6 +23,7 @@
       <tbody>
         <tag-row
           v-for="tag in filteredTags"
+          @swim="showModal"
           :key="tag[0].digest"
           :tag="tag"
           :can-destroy="canDestroy"
@@ -34,6 +35,9 @@
       </tbody>
     </table>
     <table-pagination :total.sync="tags.length" :current-page="currentPage" :itens-per-page.sync="limit" @update="updateCurrentPage"></table-pagination>
+
+    <!-- The Modal for creating new tags from an existing tag -->
+    <create-tag-modal v-show="isModalVisible" @close="closeModal" />
   </div>
 </template>
 
@@ -42,6 +46,7 @@
 
   import TagRow from './tags-table-row';
 
+  import CreateTagModal from './create/create-tag-modal';
 
   export default {
     props: {
@@ -52,12 +57,25 @@
       tagsPath: String,
       repository: Object,
     },
+    data() {
+      return {
+        isModalVisible: false,
+      };
+    },
+    methods: {
+      showModal() {
+        this.isModalVisible = true;
+      },
+      closeModal() {
+        this.isModalVisible = false;
+      },
+    },
     mixins: [TablePaginatedMixin],
 
     components: {
       TagRow,
+      CreateTagModal,
     },
-
     computed: {
       filteredTags() {
         return this.tags.slice(this.offset, this.limit * this.currentPage);

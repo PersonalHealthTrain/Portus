@@ -26,7 +26,12 @@
 
 
     <td>
-      <create-tag-action></create-tag-action>
+      <button
+        type="button"
+        class="btn"
+        @click="$emit('swim')">
+        <i class="fa fa-plus"></i>
+      </button>
     </td>
 
     <td class="vulns" v-if="securityEnabled">
@@ -45,7 +50,6 @@
   import Tag from './tag';
 
   import VulnerabilitiesParser from '../../services/vulnerabilities-parser';
-  import CreateTagAction from './create/create-tag-action';
 
   const NOT_SCANNED = 0;
   const SCAN_DONE = 2;
@@ -62,10 +66,8 @@
     },
 
     components: {
-      CreateTagAction,
       Tag,
     },
-
     data() {
       return {
         prefixID: 'sha256:',
@@ -116,6 +118,12 @@
     },
 
     methods: {
+      showModal() {
+        this.isCreateTagModalVisible = true;
+      },
+      closeModal() {
+        this.isCreateTagModalVisible = false;
+      },
       deselectTag() {
         this.tag.forEach((t) => {
           const index = this.state.selectedTags.findIndex(s => s.id === t.id);
