@@ -37,7 +37,12 @@
     <table-pagination :total.sync="tags.length" :current-page="currentPage" :itens-per-page.sync="limit" @update="updateCurrentPage"></table-pagination>
 
     <!-- The Modal for creating new tags from an existing tag -->
-    <create-tag-modal v-show="isModalVisible" @close="closeModal" />
+    <create-tag-modal
+      v-show="isModalVisible"
+      :repository="repository"
+      :current-tag="currentTag"
+      @close="closeModal"
+    />
   </div>
 </template>
 
@@ -60,10 +65,12 @@
     data() {
       return {
         isModalVisible: false,
+        currentTag: null,
       };
     },
     methods: {
-      showModal() {
+      showModal(tag) {
+        this.currentTag = tag;
         this.isModalVisible = true;
       },
       closeModal() {

@@ -29,7 +29,7 @@
       <button
         type="button"
         class="btn"
-        @click="$emit('swim')">
+        @click="$emit('swim', tag)">
         <i class="fa fa-plus"></i>
       </button>
     </td>

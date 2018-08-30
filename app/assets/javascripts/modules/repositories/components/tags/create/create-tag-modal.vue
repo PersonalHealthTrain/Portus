@@ -5,6 +5,10 @@
         this.$emit('close');
       },
     },
+    props: {
+      currentTag: Array,
+      repository: Object,
+    },
   };
 </script>
 
@@ -22,7 +26,14 @@
 
           <div class="modal-body">
             <slot name="body">
-
+              <table class="table">
+                <tr>
+                  <td>Repository</td><td>{{ repository.full_name }}</td>
+                </tr>
+                <tr>
+                  <td>Source Tag</td><td>{{ currentTag[0].name }}</td>
+                </tr>
+              </table>
             </slot>
           </div>
 
