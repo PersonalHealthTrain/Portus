@@ -144,6 +144,20 @@ module Portus
       end
     end
 
+    # Adds a new tag with the specified tag_name
+    # to the repository. Does nothing if the repository already
+    # has the name.
+    #
+    def create_tag(repository, old_tag_name, new_tag_name)
+      # First, get the manifest of the repository that should be extended by another tag.
+      # We need to fetch the ruby hash encoding the manifest and convert it
+      # to a json object for sending it as a request body
+      mf = manifest(repository, old_tag_name)[2].to_json
+      # Publish the manifest under a new tag
+      safe_request("#{repository}/manifests/#{new_tag_name}", "put", true,
+                   "application/vnd.docker.distribution.manifest.v2+json", mf)
+    end
+
     protected
 
     # Returns all the items that could be extracted from the given link that are

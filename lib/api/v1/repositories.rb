@@ -29,6 +29,34 @@ module API
 
         route_param :id, type: String, requirements: { id: /.*/ } do
           resource :tags do
+            ######################################################################
+            ## Creates a new tag with a specified name for the selected repository
+            ######################################################################
+            desc "Create a new Tag for this repository",
+                 consumes: ["application/x-www-form-urlencoded", "application/json"],
+                 failure:  [
+                   [400, "Bad request", API::Entities::ApiErrors],
+                   [401, "Authentication fails"],
+                   [403, "Authorization fails"],
+                   [422, "Unprocessable Entity", API::Entities::FullApiErrors]
+                 ]
+
+            params do
+              requires :old, type: String, documentation: { desc: "Old Tag Name" }
+              requires :new, type: String, documentation: { desc: "New Tag Name" }
+            end
+
+            post do
+              repo = Repository.find(params[:id])
+
+              # Create a new tag for that repo given that new service
+              res = ::Repositories::CreateTagService.new(current_user).execute(
+                repo, params[:old], params[:new]
+              )
+              status res.code.to_i
+            end
+            ########################################################################
+
             desc "Returns the list of the tags for the given repository",
                  params:   API::Entities::Repositories.documentation.slice(:id),
                  is_array: true,

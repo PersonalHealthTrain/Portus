@@ -13,10 +13,16 @@ module Portus
     include ::Portus::Errors
 
     # Returns an URI object and a request object for the given path & method
-    # pair.
-    def get_request(path, method)
+    # pair. Also allows init with header
+    def get_request(path, method, header = nil)
       uri = URI.join(@base_url, path)
-      req = Net::HTTP.const_get(method.capitalize).new(uri)
+      http_method = Net::HTTP.const_get(method.capitalize)
+
+      req = if header.nil?
+              http_method.new(uri)
+            else
+              http_method.new(uri, initheader: header)
+            end
       [uri, req]
     end
 
@@ -27,17 +33,15 @@ module Portus
     # The `request_auth_token` parameter means that if this method gets a 401
     # when calling the given path, it should get an authorization token
     # automatically and try again.
-    def perform_request(path, method = "get", request_auth_token = true)
-      uri, req = get_request(path, method)
-
-      # So we deal with compatibility issues in distribution 2.3 and later.
+    def perform_request(path, method = "get", request_auth_token = true,
+                        content_type = nil, request_body = nil)
       # See: https://github.com/docker/distribution/blob/master/docs/compatibility.md#content-addressable-storage-cas
-      req["Accept"] = "application/vnd.docker.distribution.manifest.v2+json"
+      header = { "Accept" => "application/vnd.docker.distribution.manifest.v2+json" }
+      header["Authorization"] = "Bearer #{@token}" if @token
+      header["Content-Type"] = content_type unless content_type.nil?
 
-      # This only happens if the auth token has already been set by a previous
-      # call.
-      req["Authorization"] = "Bearer #{@token}" if @token
-
+      uri, req = get_request(path, method, header)
+      req.body = request_body unless request_body.nil?
       res = get_response_token(uri, req)
       if res.code.to_i == 401
         # This can mean that this is the first time that the client is calling
@@ -46,11 +50,10 @@ module Portus
         if request_auth_token
           # Note that request_auth_token will raise an exception on error.
           request_auth_token(res)
-
           # Recursive call, but this time we make sure that we don't enter here
           # again. If this call fails, then there's something *really* wrong with
           # the given credentials.
-          return perform_request(path, method, false)
+          return perform_request(path, method, false, content_type, request_body)
         end
       end
       res
@@ -59,8 +62,9 @@ module Portus
     # safe_quest simply calls perform_request and wraps any kind of exception
     # into a RequestError. This way, callers don't have to check for the myriad
     # of exceptions that an HTTP request might entail.
-    def safe_request(path, method = "get", request_auth_token = true)
-      perform_request(path, method, request_auth_token)
+    def safe_request(path, method = "get", request_auth_token = true,
+                     content_type = nil, request_body = nil)
+      perform_request(path, method, request_auth_token, content_type, request_body)
     rescue *::Portus::Errors::NET => e
       message = ::Portus::Errors.message_from_exception(e)
       raise ::Portus::RequestError.new(exception: e, message: message)
@@ -105,10 +109,9 @@ module Portus
     # This method should be called after getting a 401. In this case, the
     # registry has sent the proper "WWW-Authenticate" header value that will
     # allow us the request a new authorization token for this client.
-    def request_auth_token(unhauthorized_response)
-      bearer_realm, query = parse_unauthorized_response(unhauthorized_response)
+    def request_auth_token(unauthorized_response)
+      bearer_realm, query = parse_unauthorized_response(unauthorized_response)
       uri = URI("#{bearer_realm}?#{query.to_query}")
-
       req = Net::HTTP::Get.new(uri)
       req.basic_auth(@username, @password) if credentials?
 

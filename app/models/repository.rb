@@ -166,6 +166,17 @@ class Repository < ActiveRecord::Base
     end
   end
 
+  #
+  # Creates a new tag with the provided new_tag_name for the given repository.
+  # Will also update the repositories manifest with the new tag name.
+  # This method will do nothing if the repository does not already exist
+  #
+  def self.create_new_tag(repo, old_tag_name, new_tag_name)
+    client = Registry.get.client
+    # Create a new tag inside the registry
+    client.create_tag(repo.full_name, old_tag_name, new_tag_name)
+  end
+
   # Create or update the given repository in JSON format. The given repository
   # follows the same JSON format as in the one used by the Catalog API.
   # Therefore, it's a hash with two keys:
