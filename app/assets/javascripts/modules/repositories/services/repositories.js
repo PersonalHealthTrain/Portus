@@ -8,6 +8,11 @@ const tagsCustomActions = {
     method: 'GET',
     url: 'api/v1/repositories/{repositoryId}/tags/grouped',
   },
+  // Method for creating a new Tag via POST
+  createNewTag: {
+    method: 'POST',
+    url: 'api/v1/repositories/{repositoryId}/tags',
+  },
 };
 
 const repositoryCustomActions = {
@@ -37,9 +42,17 @@ function groupedTags(repositoryId) {
   return tagsResource.groupedTags({ repositoryId });
 }
 
+// function for adding new Tag via the resource
+function createNewTag(repositoryId, update) {
+  // alert(JSON.stringify(update));
+  return tagsResource.createNewTag({ repositoryId }, update);
+}
+
+
 export default {
   get,
   groupedTags,
+  createNewTag,
   toggleStar,
   remove,
 };

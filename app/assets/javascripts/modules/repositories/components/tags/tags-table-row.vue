@@ -24,6 +24,16 @@
 
     <td>{{ pushedAt }}</td>
 
+
+    <td>
+      <button
+        type="button"
+        class="btn"
+        @click="$emit('swim', tag)">
+        <i class="fa fa-plus"></i>
+      </button>
+    </td>
+
     <td class="vulns" v-if="securityEnabled">
       <span v-if="scanPending">Pending</span>
       <span v-if="scanInProgress">In progress</span>
@@ -58,7 +68,6 @@
     components: {
       Tag,
     },
-
     data() {
       return {
         prefixID: 'sha256:',
@@ -109,6 +118,12 @@
     },
 
     methods: {
+      showModal() {
+        this.isCreateTagModalVisible = true;
+      },
+      closeModal() {
+        this.isCreateTagModalVisible = false;
+      },
       deselectTag() {
         this.tag.forEach((t) => {
           const index = this.state.selectedTags.findIndex(s => s.id === t.id);
