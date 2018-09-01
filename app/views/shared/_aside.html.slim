@@ -38,6 +38,12 @@ aside
         - if current_page?(url_for controller: 'admin/registries', action: 'index')
           .list-selected
     li.active
+      = link_to stations_path
+        i[class="fa fa-train"]
+        | Stations
+      - if current_page?(url_for stations_path)
+        .list-selected
+    li.active
       = link_to help_index_path
         i[class="fa fa-life-ring"]
         | Help

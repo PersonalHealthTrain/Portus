@@ -130,6 +130,14 @@ module API
       end
     end
 
+    class Stations < Grape::Entity
+      include ::API::Helpers
+
+      expose :station_id, documentation: { type: Integer, desc: "Station ID"}
+      expose :display_name, documentation: {type: String, desc: "Station Name"}
+    end
+
+
     class Repositories < Grape::Entity
       include ::API::Helpers
 

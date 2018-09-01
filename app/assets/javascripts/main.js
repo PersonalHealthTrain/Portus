@@ -19,6 +19,7 @@ import './modules/admin/registries';
 import './modules/users';
 import './modules/dashboard';
 import './modules/repositories';
+import './modules/stations';
 import './modules/namespaces';
 import './modules/teams';
 import './modules/webhooks';
