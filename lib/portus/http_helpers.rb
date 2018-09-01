@@ -21,7 +21,7 @@ module Portus
       req = if header.nil?
               http_method.new(uri)
             else
-              http_method.new(uri, initheader: header)
+              http_method.new(uri, initheader = header)
             end
       [uri, req]
     end
@@ -36,7 +36,7 @@ module Portus
     def perform_request(path, method = "get", request_auth_token = true,
                         content_type = nil, request_body = nil)
       # See: https://github.com/docker/distribution/blob/master/docs/compatibility.md#content-addressable-storage-cas
-      header = { "Accept" => "application/vnd.docker.distribution.manifest.v2+json" }
+      header = { :Accept => "application/vnd.docker.distribution.manifest.v2+json" }
       header["Authorization"] = "Bearer #{@token}" if @token
       header["Content-Type"] = content_type unless content_type.nil?
 
