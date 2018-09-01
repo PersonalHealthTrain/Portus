@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180612145708) do
+ActiveRecord::Schema.define(version: 20180823122930) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id",   limit: 4
@@ -114,6 +114,14 @@ ActiveRecord::Schema.define(version: 20180612145708) do
 
   add_index "stars", ["repository_id"], name: "index_stars_on_repository_id", using: :btree
   add_index "stars", ["user_id"], name: "index_stars_on_user_id", using: :btree
+
+  create_table "stations", force: :cascade do |t|
+    t.integer  "station_id",   limit: 4,                     null: false
+    t.text     "display_name", limit: 65535
+    t.boolean  "active",                     default: false, null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
 
   create_table "tags", force: :cascade do |t|
     t.string   "name",          limit: 255, default: "latest", null: false
