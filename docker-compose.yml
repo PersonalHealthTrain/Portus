@@ -109,3 +109,17 @@ services:
       - 5001:5001
     links:
       - portus
+  
+        #  inspect:
+        #    image: personalhealthtrain/inspect:0.0.1
+        #    hostname: inspect
+        #    ports:
+        #      - 9393:9393
+        #    volumes:
+        #      - ${DOCKER_SOCKET}:/var/run/docker.sock
+        #    environment:
+        #      INSPECT_REGISTRY_URI: http://registry:5000
+        #      INSPECT_REGISTRY_NAMESPACE: ${NAMESPACE}
+        #      INSPECT_REGISTRY_USERNAME: ${USERNAME}
+        #      INSPECT_REGISTRY_PASSWORD: ${PASSWORD}
+
