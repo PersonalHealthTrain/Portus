@@ -113,6 +113,8 @@ services:
         #  inspect:
         #    image: personalhealthtrain/inspect:0.0.1
         #    hostname: inspect
+        #    depends_on:
+        #     - registry
         #    ports:
         #      - 9393:9393
         #    volumes:
