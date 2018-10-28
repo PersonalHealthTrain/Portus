@@ -109,7 +109,14 @@ services:
       - 5001:5001
     links:
       - portus
-  
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+
         #  inspect:
         #    image: personalhealthtrain/inspect:0.0.1
         #    hostname: inspect
