@@ -26,11 +26,20 @@
 
 
     <td>
+      <!-- Button for creating new tags -->
       <button
         type="button"
         class="btn"
         @click="$emit('swim', tag)">
         <i class="fa fa-plus"></i>
+      </button>
+
+      <!-- Button for displaying status information about this version of the train -->
+      <button
+        type="button"
+        class="btn"
+        @click="$emit('printSummary', tag)">
+        <i class="fa fa-search"></i>
       </button>
     </td>
 
