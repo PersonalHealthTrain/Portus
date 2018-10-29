@@ -24,23 +24,12 @@
 
     <td>{{ pushedAt }}</td>
 
-
     <td>
-      <!-- Button for creating new tags -->
-      <button
-        type="button"
-        class="btn"
-        @click="$emit('swim', tag)">
-        <i class="fa fa-plus"></i>
-      </button>
-
       <!-- Button for displaying status information about this version of the train -->
-      <button
-        type="button"
-        class="btn"
-        @click="$emit('printSummary', tag)">
-        <i class="fa fa-search"></i>
-      </button>
+      <tag-action-button icon="fa-search" @action="showModal('print-summary')"></tag-action-button>
+
+      <!-- Button for creating new tags from existing ones -->
+      <tag-action-button icon="fa-plus" @action="showModal('create-tag')"></tag-action-button>
     </td>
 
     <td class="vulns" v-if="securityEnabled">
@@ -57,6 +46,8 @@
   import dayjs from 'dayjs';
 
   import Tag from './tag';
+  import TagActionButton from './tag-action-button';
+
 
   import VulnerabilitiesParser from '../../services/vulnerabilities-parser';
 
@@ -72,9 +63,11 @@
       state: Object,
       tagsPath: String,
       repository: Object,
+      showModal: Function,
     },
 
     components: {
+      TagActionButton,
       Tag,
     },
     data() {
@@ -127,12 +120,6 @@
     },
 
     methods: {
-      showModal() {
-        this.isCreateTagModalVisible = true;
-      },
-      closeModal() {
-        this.isCreateTagModalVisible = false;
-      },
       deselectTag() {
         this.tag.forEach((t) => {
           const index = this.state.selectedTags.findIndex(s => s.id === t.id);

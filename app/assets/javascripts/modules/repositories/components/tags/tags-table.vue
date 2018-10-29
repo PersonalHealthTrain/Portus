@@ -23,7 +23,7 @@
       <tbody>
         <tag-row
           v-for="tag in filteredTags"
-          @swim="showModal"
+          :show-modal="showModal.bind(this, tag)"
           :key="tag[0].digest"
           :tag="tag"
           :can-destroy="canDestroy"
@@ -36,13 +36,11 @@
     </table>
     <table-pagination :total.sync="tags.length" :current-page="currentPage" :itens-per-page.sync="limit" @update="updateCurrentPage"></table-pagination>
 
-    <!-- The Modal for creating new tags from an existing tag -->
-    <create-tag-modal
-      v-show="isModalVisible"
-      :repository="repository"
-      :current-tag="currentTag"
-      @close="closeModal"
-    />
+    <!-- Modals -->
+    <print-summary-modal :close-modal="closeModal" :tag="modalTag" v-if="modalState == 'print-summary'"></print-summary-modal>
+
+    <!-- <create-tag-modal v-if="modalState == 'create-tag'"></create-tag-modal> -->
+
   </div>
 </template>
 
@@ -51,7 +49,9 @@
 
   import TagRow from './tags-table-row';
 
-  import CreateTagModal from './create-tag-modal';
+  import CreateTagModal from './modal/create-tag-modal';
+
+  import PrintSummaryModal from './modal/print-summary-modal';
 
   export default {
     props: {
@@ -64,17 +64,18 @@
     },
     data() {
       return {
-        isModalVisible: false,
-        currentTag: null,
+        modalState: null, // Either: null, 'create-tag', 'print-summary'
+        modalTag: null, // The tag object that the current modal refers to
       };
     },
     methods: {
-      showModal(tag) {
-        this.currentTag = tag;
-        this.isModalVisible = true;
+      showModal(modalTag, modalState) {
+        this.modalTag = modalTag;
+        this.modalState = modalState;
       },
       closeModal() {
-        this.isModalVisible = false;
+        this.modalTag = null;
+        this.modalState = null;
       },
     },
     mixins: [TablePaginatedMixin],
@@ -82,6 +83,7 @@
     components: {
       TagRow,
       CreateTagModal,
+      PrintSummaryModal,
     },
     computed: {
       filteredTags() {
