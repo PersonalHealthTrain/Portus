@@ -38,7 +38,10 @@
     </div>
 
     <tags-panel :state="state" :tags="tags" :tags-path="tagsPath" :security-enabled="securityEnabled" :repository="repository"></tags-panel>
+    <route-panel :tags="tags"></route-panel>
+    <!--
     <comments-wrapper :state="state" :comments-ref="commentsRef" :repository="repository"></comments-wrapper>
+    -->
   </div>
 </template>
 
@@ -55,6 +58,9 @@
   import TagsService from '../services/tags';
 
   import RepositoriesStore from '../store';
+
+  // Personal Health Train: Routes
+  import RoutePanel from '../components/route/route-panel';
 
   const { set } = Vue;
 
@@ -89,6 +95,7 @@
       TagsPanel,
       CommentsWrapper,
       Star,
+      RoutePanel,
     },
 
     data() {
