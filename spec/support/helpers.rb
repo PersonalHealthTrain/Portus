@@ -80,6 +80,10 @@ module Helpers
   def toggle_new_member_form
     find(".toggle-link-new-member").click
   end
+
+  def toggle_new_repository_form
+    find(".toggle-link-new-repository").click
+  end
 end
 
 RSpec.configure { |config| config.include Helpers }

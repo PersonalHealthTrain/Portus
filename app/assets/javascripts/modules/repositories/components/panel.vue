@@ -39,13 +39,9 @@
         type: Boolean,
         default: true,
       },
-    },
-    data() {
-      return {
-        state: {
-          newFormVisible: false,
-        },
-      };
+      state: {
+        type: Object,
+      },
     },
     components: {
       RepositoriesTable,
